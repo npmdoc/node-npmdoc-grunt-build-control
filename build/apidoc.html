@@ -1,0 +1,185 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/robwierzbowski/grunt-build-control"
+
+    >grunt-build-control (v0.7.1)</a>
+</h1>
+<h4>Automate version control tasks for your project's built code. Keep built code in sync with source code, maintain multiple branches of built code, commit with automatic messages, and push to remote repositories.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-build-control">module grunt-build-control</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-build-control.grunt-build-control">
+            function <span class="apidocSignatureSpan"></span>grunt-build-control
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-build-control" id="apidoc.module.grunt-build-control">module grunt-build-control</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-build-control.grunt-build-control" id="apidoc.element.grunt-build-control.grunt-build-control">
+        function <span class="apidocSignatureSpan"></span>grunt-build-control
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-build-control = function (grunt) {
+  var pkg = require(&#x27;./package.json&#x27;);
+
+  // Project configuration.
+  grunt.initConfig({
+    jshint: {
+      all: [
+        &#x27;Gruntfile.js&#x27;,
+        &#x27;tasks/*.js&#x27;,
+        &#x27;&#x3c;%= mochaTest.test.src %&#x3e;&#x27;
+      ],
+      options: {
+        jshintrc: &#x27;.jshintrc&#x27;,
+      },
+    },
+
+    // Before generating any new files, remove any previously-created files.
+    clean: {
+      tests: [
+      &#x27;test/mock&#x27;
+      ]
+    },
+
+    watch: {
+      tests: {
+        files: [
+          &#x27;tasks/**/*&#x27;, &#x27;test/**/*&#x27;,
+          &#x27;!**/test/mock/**&#x27;,
+
+          // don&#x27;t watch remote repo files
+          // see https://github.com/gruntjs/grunt-contrib-watch/issues/75#issuecomment-70389741
+          &#x27;!test/scenarios/**/{remote,*_remote}/{**/*,*}&#x27;
+        ],
+        tasks: &#x27;test&#x27;,
+        options: {
+          atBegin: true
+        }
+      }
+    },
+
+    // Configuration to be run (and then tested).
+    buildcontrol: {
+      options: {
+        dir: &#x27;dist&#x27;,
+      },
+      production: {
+        options: {
+          branch: &#x27;prod&#x27;,
+          remote: &#x27;git@github.com:robwierzbowski/grunt-build-control.git&#x27;,
+          commit: true,
+          message: &#x27;Check *this* out.&#x27;,
+          push: true
+        }
+      }
+    },
+
+    // Unit tests.
+    mochaTest: {
+      test: {
+        src: [&#x27;test/tests.js&#x27;]
+      }
+    }
+  });
+
+
+
+  // Actually load this plugin&#x27;s task(s).
+  grunt.loadTasks(&#x27;tasks&#x27;);
+
+  // These plugins provide necessary tasks.
+  grunt.loadNpmTasks(&#x27;grunt-contrib-jshint&#x27;);
+  grunt.loadNpmTasks(&#x27;grunt-contrib-clean&#x27;);
+  grunt.loadNpmTasks(&#x27;grunt-contrib-watch&#x27;);
+  grunt.loadNpmTasks(&#x27;grunt-mocha-test&#x27;);
+
+  // Whenever the &#x22;test&#x22; task is run, first clean the &#x22;tmp&#x22; dir, then run this
+  // plugin&#x27;s task(s), then test the result.
+  grunt.registerTask(&#x27;test&#x27;, [
+    &#x27;clean&#x27;,
+    &#x27;mochaTest&#x27;
+  ]);
+
+  // By default, lint and run all tests.
+  grunt.registerTask(&#x27;default&#x27;, [&#x27;jshint&#x27;, &#x27;test&#x27;]);
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
